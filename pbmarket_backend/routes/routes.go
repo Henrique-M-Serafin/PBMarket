@@ -11,6 +11,7 @@ func HandleRoutes() {
 	r.Use(middleware.CORSMiddleware())
 	r.GET("/products", controllers.ShowProducts)
 	r.GET("/products/:id", controllers.GetProductByID)
+	r.GET("/products/search", controllers.SearchProducts)
 	r.POST("/products", controllers.CreateProduct)
 	r.DELETE("/products/:id", controllers.DeleteProduct)
 	r.PATCH("/products/:id", controllers.UpdateProduct)
