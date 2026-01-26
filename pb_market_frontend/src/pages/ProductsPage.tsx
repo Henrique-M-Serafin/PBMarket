@@ -7,6 +7,8 @@ import { createProduct, deleteProduct, getProductByName, getProducts, updateProd
 import type { Product } from "@/types/Product";
 import { PlusIcon} from "lucide-react"; 
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
+
 
 export function ProductsPage() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -46,7 +48,7 @@ export function ProductsPage() {
         if (!confirmed) return;
 
         await deleteProduct(id);
-        alert("Produto excluído com sucesso!");
+        toast.success("Produto excluído com sucesso!");
         const response = await getProducts();
         setProducts(response.data);
     }
@@ -67,10 +69,11 @@ export function ProductsPage() {
             setOpen(false);
             setSelectedProduct(null);
             setIsEditing(false);
+            toast.success("Produto salvo com sucesso!");
 
         } catch (error) {
             console.error("Erro ao salvar produto:", error);
-            alert("Erro ao salvar produto");
+            toast.error("Erro ao salvar produto");
         }
         }
 
