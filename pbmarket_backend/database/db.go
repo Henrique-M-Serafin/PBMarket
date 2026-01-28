@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Henrique-M-Serafin/pbmarket_backend/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -28,4 +29,5 @@ func DatabaseConnection() {
 	}
 
 	DB = db
+	DB.AutoMigrate(&models.Product{}, &models.User{})
 }
