@@ -6,10 +6,9 @@ import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { createProduct, deleteProduct, getProductByName, getProducts, updateProduct } from "@/services/productService";
 import type { Product } from "@/types/Product";
-import { PlusIcon} from "lucide-react"; 
+import { Grid3X3, Pencil, PlusIcon, Rows3, Trash2} from "lucide-react"; 
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-
 
 export function ProductsPage() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -19,6 +18,7 @@ export function ProductsPage() {
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
     const [productToDelete, setProductToDelete] = useState<string | null>(null);
+    const [layoutView, setLayoutView] = useState<"grid" | "list">("grid");
 
     useEffect(() => {
         async function loadProducts() {
@@ -46,6 +46,10 @@ export function ProductsPage() {
     function openDeleteDialog(id: string) {
         setProductToDelete(id);
         setDialogOpen(true);
+    }
+
+    function switchLayoutView() {
+        setLayoutView(prevView => prevView === "grid" ? "list" : "grid");
     }
 
     async function handleConfirmDelete() {
@@ -105,13 +109,16 @@ export function ProductsPage() {
             <div className="flex flex-col gap-2 justify-center items-center">
                 <div className="flex gap-2 justify-between w-full   ">
                 <h1 className="font-bold text-lg">Lista de produtos cadastrados</h1>
-                <Button className=""
-                    onClick={() => {
-                        setSelectedProduct(null)
-                        setIsEditing(false)
-                        setOpen(true)
-                    }}
-                ><p>Cadastrar produto</p><PlusIcon></PlusIcon></Button>
+                <div className="flex gap-2">
+                    <Button onClick={switchLayoutView}> {layoutView === "grid" ? <Grid3X3></Grid3X3> : <Rows3></Rows3>}</Button>
+                    <Button className=""
+                        onClick={() => {
+                            setSelectedProduct(null)
+                            setIsEditing(false)
+                            setOpen(true)
+                        }}
+                    ><p>Cadastrar produto</p><PlusIcon></PlusIcon></Button>
+                </div>
                 </div>
                 <Field className="">
                     <FieldLabel id="search-input">Buscar produtos</FieldLabel>
@@ -120,29 +127,29 @@ export function ProductsPage() {
                     <FieldDescription>Utilize o campo acima para buscar produtos pelo nome.</FieldDescription>
                 </Field>
             </div>
-            <div className="flex flex-wrap justify-evenly items-center">
+            <div className={`flex ${layoutView === "grid" ? "flex-wrap justify-between items-center" : "flex-col items-center"} `}>
                 {products.map(product => (
-                <Card key={product.ID} className="m-4 p-4 flex flex-col max-w-sm w-full bg-primary-foreground">
-                    <CardHeader>
+                <Card key={product.ID} className={`${layoutView === "grid" ? "m-2 p-4 flex flex-col max-w-sm w-full bg-primary-foreground" : "m-1 p-4 flex flex-col w-full bg-primary-foreground"}`}>
+                    <CardHeader className={`${layoutView === "grid" ? "flex flex-col gap-2" : "flex gap-2 justify-between"} `}>
                         <CardTitle>{product.name}</CardTitle>
                         <CardDescription className="line-clamp-3">{product.description}</CardDescription>
                     </CardHeader>
-                        
+
                     <CardContent>
-                        <div className="flex flex-col gap-1">
-                            <p className="font-semibold">Quantidade: </p>{product.quantity}
-                            <p className="font-semibold">Preço: </p>R$ {product.price.toFixed(2)}
+                        <div className="flex justify-between gap-1">
+                            <p className="font-semibold">Quantidade:  {product.quantity}</p>
+                            <p className="font-semibold">Preço: {product.price.toFixed(2)} R$</p> 
                         </div>
                         
 
                     </CardContent>   
-                    <CardFooter className="flex gap-2">
+                    <CardFooter className={`flex ${layoutView === "grid" ? "flex" : "flex-row justify-center"} gap-2`}>
                         <Button onClick={() => {
                             setSelectedProduct(product);
                             setIsEditing(true);
                             setOpen(true);
-                        }} className="flex-1" variant="ghost">Editar</Button>
-                        <Button onClick={() => {openDeleteDialog(product.ID)}} className="flex-1" variant="destructive">Excluir</Button>    
+                        }} className={`${layoutView === "grid" ? "flex-1" : "w-md "}`}><Pencil/>Editar</Button>
+                        <Button onClick={() => {openDeleteDialog(product.ID)}} className={`${layoutView === "grid" ? "flex-1" : "w-md "}`}variant="destructive"><Trash2/>Excluir</Button>    
                     </CardFooter> 
                 </Card>
                 ))}
