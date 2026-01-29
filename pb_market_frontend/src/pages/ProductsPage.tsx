@@ -1,3 +1,4 @@
+import { DeleteDialog } from "@/components/DeleteDialog";
 import { ProductDialog } from "@/components/ProductDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,7 +17,8 @@ export function ProductsPage() {
     const [isOpen, setOpen] = useState<boolean>(false);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
+    const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+    const [productToDelete, setProductToDelete] = useState<string | null>(null);
 
     useEffect(() => {
         async function loadProducts() {
@@ -41,17 +43,23 @@ export function ProductsPage() {
         fetchProducts();
     }, [searchTerm]);
 
-    async function HandleDeleteProduct(id: string) {
-        if (!id) return;
+    function openDeleteDialog(id: string) {
+        setProductToDelete(id);
+        setDialogOpen(true);
+    }
 
-        const confirmed = confirm("Tem certeza que deseja excluir este produto?");
-        if (!confirmed) return;
+    async function handleConfirmDelete() {
+        if (!productToDelete) return;
 
-        await deleteProduct(id);
+        await deleteProduct(productToDelete);
         toast.success("Produto excluído com sucesso!");
+
         const response = await getProducts();
         setProducts(response.data);
-    }
+
+        setDialogOpen(false);
+        setProductToDelete(null);
+        }
 
     async function handleCreateOrUpdateProduct(data: Partial<Omit<Product, "ID">>) {
         try {
@@ -87,6 +95,12 @@ export function ProductsPage() {
             setOpen={setOpen}
             onSubmit={handleCreateOrUpdateProduct}
             />
+
+        <DeleteDialog 
+            open={dialogOpen}
+            onClose={() => setDialogOpen(false)}
+            onConfirm={handleConfirmDelete}
+        />
         <main className="flex flex-col justify-center gap-2">
             <div className="flex flex-col gap-2 justify-center items-center">
                 <div className="flex gap-2 justify-between w-full   ">
@@ -128,7 +142,7 @@ export function ProductsPage() {
                             setIsEditing(true);
                             setOpen(true);
                         }} className="flex-1" variant="ghost">Editar</Button>
-                        <Button onClick={() => {HandleDeleteProduct(product.ID)}} className="flex-1" variant="destructive">Excluir</Button>    
+                        <Button onClick={() => {openDeleteDialog(product.ID)}} className="flex-1" variant="destructive">Excluir</Button>    
                     </CardFooter> 
                 </Card>
                 ))}

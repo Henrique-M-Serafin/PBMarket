@@ -1,6 +1,6 @@
 //productService.ts
 
-import { api } from '@/api/api';
+import api from '@/api/api';
 
 export const getProducts = async () => api.get('/products');
 export const getProductById = async (id: string) => api.get(`/products/${id}`);
