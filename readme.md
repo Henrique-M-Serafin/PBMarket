@@ -9,7 +9,7 @@
 [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-## 🚀 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 O projeto é dividido em duas partes principais: o backend, responsável pela lógica de negócio e persistência de dados, e o frontend, que consome a API e oferece a interface ao usuário.
 
@@ -36,7 +36,7 @@ O projeto é dividido em duas partes principais: o backend, responsável pela l�
 | **TailwindCSS** | Framework de CSS utilitário para estilização rápida e consistente. |
 | **shadcn/ui** | Coleção de componentes de UI reutilizáveis para React. |
 
-## 📂 Estrutura do Projeto
+## Estrutura do Projeto
 
 A estrutura do projeto foi pensada para manter uma clara separação de responsabilidades entre o backend e o frontend, facilitando a manutenção e escalabilidade.
 
@@ -61,7 +61,7 @@ PBMarket/
 └── README.md
 ```
 
-## ⚙️ Funcionalidades
+## Funcionalidades
 
 - [x] **Cadastro de Usuário:** Permite que novos usuários se registrem no sistema.
 - [x] **Login com Autenticação JWT:** Geração de token para acesso seguro às rotas protegidas.
@@ -72,7 +72,7 @@ PBMarket/
 - [x] **Rotas Protegidas:** Acesso a determinadas funcionalidades apenas para usuários autenticados.
 - [x] **Controle de Sessão:** Gerenciamento do estado de autenticação no frontend.
 
-## 🔐 Autenticação
+## Autenticação
 
 A autenticação é baseada em **JSON Web Tokens (JWT)**. Após o login, um token é gerado e enviado ao cliente, que o armazena no `localStorage` e o envia no cabeçalho de cada requisição para rotas protegidas.
 
@@ -81,7 +81,7 @@ A autenticação é baseada em **JSON Web Tokens (JWT)**. Após o login, um toke
 
 As rotas de `POST`, `PATCH` e `DELETE` de produtos exigem um token válido para serem acessadas.
 
-## 🐳 Como Rodar o Backend com Docker
+## Como Rodar o Backend com Docker
 
 Para executar o backend, é necessário ter o Docker e o Docker Compose instalados.
 
@@ -98,7 +98,7 @@ Para executar o backend, é necessário ter o Docker e o Docker Compose instalad
     JWT_SECRET=uma_chave_segura_aqui
     ```
 
-    > ⚠️ **Atenção:** Nunca suba seu arquivo `.env` real para o GitHub. Adicione-o ao `.gitignore`.
+    > **Atenção:** Nunca suba seu arquivo `.env` real para o GitHub. Adicione-o ao `.gitignore`.
 
 2.  **Suba os Containers**
 
@@ -110,7 +110,7 @@ Para executar o backend, é necessário ter o Docker e o Docker Compose instalad
 
     A API estará disponível em `http://localhost:8080`.
 
-## 💻 Como Rodar o Frontend
+##  Como Rodar o Frontend
 
 Para executar o frontend, você precisa do Node.js e do npm (ou outro gerenciador de pacotes) instalados.
 
@@ -132,7 +132,7 @@ Para executar o frontend, você precisa do Node.js e do npm (ou outro gerenciado
 
     A aplicação estará disponível em `http://localhost:5173`.
 
-## 📌 Endpoints Principais da API
+## Endpoints Principais da API
 
 | Método | Rota | Descrição | Protegido |
 | :--- | :--- | :--- | :---: |
@@ -143,7 +143,7 @@ Para executar o frontend, você precisa do Node.js e do npm (ou outro gerenciado
 | `PATCH` | `/products/:id` | Atualiza um produto existente. | Sim |
 | `DELETE` | `/products/:id` | Remove um produto. | Sim |
 
-## 🎯 Objetivo do Projeto
+## Objetivo do Projeto
 
 Este projeto foi desenvolvido com o objetivo de aplicar e demonstrar conhecimentos em:
 
@@ -154,7 +154,7 @@ Este projeto foi desenvolvido com o objetivo de aplicar e demonstrar conheciment
 -   Construção de interfaces reativas com **React e TypeScript**.
 -   Utilização de **Docker** para criar ambientes de desenvolvimento reproduzíveis.
 
-## 👨‍💻 Autor
+## Autor
 
 **Henrique Serafin**
 
