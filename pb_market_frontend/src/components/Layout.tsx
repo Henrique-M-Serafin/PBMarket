@@ -18,7 +18,6 @@ export function Layout() {
             <div className="flex gap-4 items-center">
                 <Switch checked={theme === "dark"} onCheckedChange={toggleTheme}></Switch>
                 <Button><User />{ user ? user?.user?.name : "Usuário"}</Button>
-                <Button><ShoppingCart /> Carrinho</Button>
                 <Button onClick={() => navigate("/")}><LogOut /> Sair</Button>
             </div>
         </header>
