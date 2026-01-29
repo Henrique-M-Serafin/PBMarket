@@ -34,8 +34,8 @@ export function RegisterPage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-secondary">
-        <h1 className="text-3xl font-bold mb-4">Página de Registro PB Market</h1>
-        <Card className="w-sm"> 
+        <h1 className="text-2xl font-bold mb-4">Página de Registro PB Market</h1>
+        <Card className="w-xs lg:w-lg"> 
             <CardHeader>
                 <CardTitle>Registro</CardTitle>
                 <CardDescription>Crie sua conta para acessar o sistema.</CardDescription>

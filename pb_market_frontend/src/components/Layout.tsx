@@ -14,9 +14,9 @@ export function Layout() {
   return (
     <div className="min-h-screen bg-secondary flex flex-col">
         <header className="flex justify-between bg-card p-4 border-b-1 border-primary">
-            <h1 className="text-2xl text-primary font-bold flex items-center gap-2"><ShoppingCart />PB Market</h1>
+            <h1 className="lg:text-2xl text-lg text-primary font-bold flex items-center gap-2"><ShoppingCart className="hidden lg:flex" />PB Market</h1>
             <div className="flex gap-4 justify-center items-center">
-               {theme === "dark" ? <Moon className="h-6 w-6"/> : <Sun className="h-6 w-6" />}
+               {theme === "dark" ? <Moon className="hidden lg:flex h-6 w-6"/> : <Sun  className=" hidden lg:flex h-6 w-6" />}
                 <Switch checked={theme === "dark"} onCheckedChange={toggleTheme}></Switch>
                 <Button><User />{ user ? user?.user?.name : "Usuário"}</Button>
                 <Button onClick={() => logout()}><LogOut /> Sair</Button>

@@ -18,7 +18,7 @@ export function ProductsPage() {
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
     const [productToDelete, setProductToDelete] = useState<string | null>(null);
-    const [layoutView, setLayoutView] = useState<"grid" | "list">("grid");
+    const [layoutView, setLayoutView] = useState<"grid" | "list">("list");
 
     useEffect(() => {
         async function loadProducts() {
@@ -108,10 +108,10 @@ export function ProductsPage() {
         <main className="flex flex-col bg-secondary justify-center gap-2">
             <div className="flex flex-col gap-2 justify-center items-center">
                 <div className="flex gap-2 justify-between w-full   ">
-                <h1 className="font-bold text-lg">Lista de produtos cadastrados</h1>
-                <div className="flex gap-2">
-                    <Button onClick={switchLayoutView}> {layoutView === "grid" ? <Grid3X3></Grid3X3> : <Rows3></Rows3>}</Button>
-                    <Button className=""
+                <h1 className="hidden lg:flex w-full font-bold text-lg">Lista de produtos cadastrados</h1>
+                <div className="flex justify-end gap-2 w-full">
+                    <Button className="hidden lg:flex"     onClick={switchLayoutView}> {layoutView === "grid" ? <Grid3X3></Grid3X3> : <Rows3></Rows3>}</Button>
+                    <Button className="flex w-full lg:w-auto lg:justify-end"
                         onClick={() => {
                             setSelectedProduct(null)
                             setIsEditing(false)
@@ -127,7 +127,7 @@ export function ProductsPage() {
                     <FieldDescription>Utilize o campo acima para buscar produtos pelo nome.</FieldDescription>
                 </Field>
             </div>
-            <div className={`flex ${layoutView === "grid" ? "flex-wrap justify-between items-center" : "flex-col items-center"} `}>
+            <div className={`flex justify-center w-full lg:justify-between ${layoutView === "grid" ? "flex-wrap justify-between items-center" : "flex-col justify-center items-center"} `}>
                 {products.map(product => (
                 <Card key={product.ID} className={`${layoutView === "grid" ? "m-2 p-4 flex flex-col max-w-sm w-full bg-primary-foreground" : "m-1 p-4 flex flex-col w-full bg-primary-foreground"}`}>
                     <CardHeader className={`${layoutView === "grid" ? "flex flex-col gap-2" : "flex gap-2 justify-between"} `}>
@@ -143,13 +143,34 @@ export function ProductsPage() {
                         
 
                     </CardContent>   
-                    <CardFooter className={`flex ${layoutView === "grid" ? "flex" : "flex-row justify-center"} gap-2`}>
+                    <CardFooter
+                    className={`
+                        flex gap-2
+                        ${layoutView === "grid"
+                            ? "flex-col sm:flex-row"
+                            : "flex-col sm:flex-row sm:justify-center"}
+                    `}
+                    >                        
                         <Button onClick={() => {
                             setSelectedProduct(product);
                             setIsEditing(true);
                             setOpen(true);
-                        }} className={`${layoutView === "grid" ? "flex-1" : "w-md "}`}><Pencil/>Editar</Button>
-                        <Button onClick={() => {openDeleteDialog(product.ID)}} className={`${layoutView === "grid" ? "flex-1" : "w-md "}`}variant="destructive"><Trash2/>Excluir</Button>    
+                        }} className={`
+                            w-full 
+                            sm:w-xs
+                            ${layoutView === "grid" ? "flex-1" : ""}
+                            `}>
+                                <Pencil/>Editar
+                            </Button>
+
+                            <Button onClick={() => {openDeleteDialog(product.ID)}} 
+                            className={`
+                                w-full
+                                sm:w-xs
+                                ${layoutView === "grid" ? "flex-1" : ""}
+                            `} variant="destructive">
+                                <Trash2/>Excluir
+                            </Button>    
                     </CardFooter> 
                 </Card>
                 ))}
