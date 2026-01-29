@@ -101,7 +101,7 @@ export function ProductsPage() {
             onClose={() => setDialogOpen(false)}
             onConfirm={handleConfirmDelete}
         />
-        <main className="flex flex-col justify-center gap-2">
+        <main className="flex flex-col bg-secondary justify-center gap-2">
             <div className="flex flex-col gap-2 justify-center items-center">
                 <div className="flex gap-2 justify-between w-full   ">
                 <h1 className="font-bold text-lg">Lista de produtos cadastrados</h1>

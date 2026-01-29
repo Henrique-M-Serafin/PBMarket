@@ -30,7 +30,7 @@ export function LoginPage() {
   }
 
   return (
-    <main className="flex items-center min-h-screen w-full justify-center">
+    <main className="flex items-center  min-h-screen w-full justify-center bg-secondary">
       <Card className="w-[400px]">
         <CardHeader>
           <CardTitle>PB Market</CardTitle>
