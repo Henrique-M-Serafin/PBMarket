@@ -1,5 +1,5 @@
-import { LogOut, ShoppingCart, User } from "lucide-react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { LogOut, User } from "lucide-react";
+import { Outlet  } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Switch } from "./ui/switch";
 import { useTheme } from "@/hooks/useTheme";
@@ -7,8 +7,8 @@ import { useAuth } from "@/hooks/useAuth";
 
 
 export function Layout() {
+    const { logout } = useAuth()
     const user = useAuth()
-    const navigate = useNavigate();
     const {theme, toggleTheme} = useTheme();
 
   return (
@@ -18,7 +18,7 @@ export function Layout() {
             <div className="flex gap-4 items-center">
                 <Switch checked={theme === "dark"} onCheckedChange={toggleTheme}></Switch>
                 <Button><User />{ user ? user?.user?.name : "Usuário"}</Button>
-                <Button onClick={() => navigate("/")}><LogOut /> Sair</Button>
+                <Button onClick={() => logout()}><LogOut /> Sair</Button>
             </div>
         </header>
         <main className="flex-grow container bg-secondary mx-auto p-4">

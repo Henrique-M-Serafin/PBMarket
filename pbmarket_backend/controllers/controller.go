@@ -26,13 +26,23 @@ func GetProductByID(c *gin.Context) {
 }
 
 func CreateProduct(c *gin.Context) {
-	var product models.CreateProductInput
-	if err := c.ShouldBindJSON(&product); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	var input models.CreateProductInput
+
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
+
+	product := models.Product{
+		Name:        input.Name,
+		Price:       input.Price,
+		Quantity:    input.Quantity,
+		Description: input.Description,
+	}
+
 	database.DB.Create(&product)
-	c.JSON(http.StatusCreated, product)
+
+	c.JSON(201, product)
 }
 
 func DeleteProduct(c *gin.Context) {
@@ -48,17 +58,28 @@ func DeleteProduct(c *gin.Context) {
 
 func UpdateProduct(c *gin.Context) {
 	id := c.Param("id")
-	var product models.CreateProductInput
-	result := database.DB.First(&product, id)
-	if result.Error != nil {
+
+	// Model real (tabela products)
+	var product models.Product
+
+	if err := database.DB.First(&product, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
 		return
 	}
-	if err := c.ShouldBindJSON(&product); err != nil {
+
+	var input models.CreateProductInput
+
+	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	database.DB.Model(&product).Updates(product)
+	product.Name = input.Name
+	product.Price = input.Price
+	product.Quantity = input.Quantity
+	product.Description = input.Description
+
+	database.DB.Save(&product)
+
 	c.JSON(http.StatusOK, product)
 }
 
